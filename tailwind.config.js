@@ -2,7 +2,11 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'bg-desktop-dark': "url('../public/images/bg-desktop-dark.jpg')",
+      }
+    },
     colors: {
       BrightBlue: 'hsl(220, 98%, 61%)',
       VeryLightGray: 'hsl(0, 0%, 98%)',
@@ -18,6 +22,9 @@ module.exports = {
       VeryDarkGrayishBlue1: 'hsl(233, 14%, 35%)',
       VeryDarkGrayishBlue2: 'hsl(237, 14%, 26%)',
     },
+    fontFamily: {
+      'body': ['Josefin Sans', 'sans-serif'],
+    }
   },
   plugins: [],
 }
