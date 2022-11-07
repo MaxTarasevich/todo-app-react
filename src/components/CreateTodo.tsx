@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { BsCircle } from 'react-icons/bs'
+import { RiSave3Fill } from 'react-icons/ri'
 
 interface TodoInterface {
   userId: number
@@ -11,11 +12,21 @@ interface TodoInterface {
 
 interface Props {
   addTodo: (todo: TodoInterface) => void
+  editTodo?: (id: number, title: string) => void
+  changeEdit?: () => void
+  title?: string
+  id?: number
 }
 
-const CreateTodo: React.FC<Props> = ({ addTodo }) => {
+const CreateTodo: React.FC<Props> = ({
+  addTodo,
+  editTodo,
+  title,
+  id,
+  changeEdit,
+}) => {
   const [todo, setTodo] = useState({
-    title: '',
+    title: title ? title : '',
     completed: false,
   })
 
@@ -24,17 +35,21 @@ const CreateTodo: React.FC<Props> = ({ addTodo }) => {
 
   function handlerSubmint(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    let newTodo = {
-      userId: 1,
-      id: Date.now(),
-      ...todo,
+    if (id && title && !!changeEdit && !!editTodo) {
+      changeEdit()
+      editTodo(id, todo.title)
+    } else {
+      let newTodo = {
+        userId: 1,
+        id: Date.now(),
+        ...todo,
+      }
+      addTodo(newTodo)
+      setTodo({
+        title: '',
+        completed: false,
+      })
     }
-    addTodo(newTodo)
-    console.log(newTodo)
-    setTodo({
-      title: '',
-      completed: false,
-    })
   }
   return (
     <form
@@ -60,6 +75,9 @@ const CreateTodo: React.FC<Props> = ({ addTodo }) => {
         value={todo.title}
         onChange={(e) => setTodo({ ...todo, title: e.target.value })}
       />
+      <button>
+        <RiSave3Fill className={iconsStyle} />
+      </button>
     </form>
   )
 }

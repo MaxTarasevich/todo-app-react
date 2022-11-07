@@ -24,15 +24,15 @@ function App() {
   function addTodo(todo: TodoInterface) {
     if (data) {
       setData([...data, todo])
-    }else{
+    } else {
       setData([todo])
     }
   }
 
-  function completeTodo(id: number){
-    if (data){
-     const newData = data.map((el)=>{
-        if(el.id === id){
+  function completeTodo(id: number) {
+    if (data) {
+      const newData = data.map((el) => {
+        if (el.id === id) {
           el.completed = !el.completed
         }
         return el
@@ -41,11 +41,23 @@ function App() {
     }
   }
 
-  function deleteTodo(id:number){
-    if (data){
-      const newData = data.filter((el)=> el.id !== id)
-       setData(newData)
-     }
+  function deleteTodo(id: number) {
+    if (data) {
+      const newData = data.filter((el) => el.id !== id)
+      setData(newData)
+    }
+  }
+
+  function editTodo(id: number, title: string) {
+    if (data) {
+      const newData = data.map((el) => {
+        if (el.id === id) {
+          el.title = title
+        }
+        return el
+      })
+      setData(newData)
+    }
   }
 
   return (
@@ -58,7 +70,13 @@ function App() {
           <CreateTodo addTodo={addTodo}/>
         </div>
       </div>
-      <TodosList data={data} completeTodo={completeTodo} deleteTodo={deleteTodo}/>
+      <TodosList
+        data={data}
+        completeTodo={completeTodo}
+        deleteTodo={deleteTodo}
+        addTodo={addTodo}
+        editTodo={editTodo} 
+      />
     </>
   )
 }
