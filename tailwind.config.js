@@ -8,6 +8,7 @@ module.exports = {
       }
     },
     colors: {
+      transparent:'transparent',
       BrightBlue: 'hsl(220, 98%, 61%)',
       VeryLightGray: 'hsl(0, 0%, 98%)',
       VeryLightGrayishBlue: 'hsl(236, 33%, 92%)',

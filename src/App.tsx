@@ -1,8 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CreateTodo from './components/CreateTodo'
 import TodosList from './components/TodosList'
 
+interface TodoInterface {
+  userId: number
+  id: number
+  title: string
+  completed: boolean
+}
+
 function App() {
+  const [data, setData] = useState<TodoInterface[] | undefined>()
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then((data) => data.json())
+      .then((data) => {
+        data.length = 4
+        return setData(data)
+      })
+  }, [])
+
+  function addTodo(todo: TodoInterface) {
+    if (data) {
+      setData([...data, todo])
+    }else{
+      setData([todo])
+    }
+  }
+
+  function completeTodo(id: number){
+    if (data){
+     const newData = data.map((el)=>{
+        if(el.id === id){
+          el.completed = !el.completed
+        }
+        return el
+      })
+      setData(newData)
+    }
+  }
+
+  function deleteTodo(id:number){
+    if (data){
+      const newData = data.filter((el)=> el.id !== id)
+       setData(newData)
+     }
+  }
+
   return (
     <>
       <div className=" pb-20 font-body bg-bg-desktop-dark bg-no-repeat bg-cover">
@@ -10,10 +55,10 @@ function App() {
           <h1 className="uppercase text-[40px] font-bold text-VeryLightGray pt-16 pb-10">
             Todo
           </h1>
-          <CreateTodo />
+          <CreateTodo addTodo={addTodo}/>
         </div>
       </div>
-      <TodosList />
+      <TodosList data={data} completeTodo={completeTodo} deleteTodo={deleteTodo}/>
     </>
   )
 }

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Todo from './Todo'
-
 
 interface TodoInterface {
   userId: number
@@ -9,21 +8,16 @@ interface TodoInterface {
   completed: boolean
 }
 
-const TodosList = () => {
+interface Props {
+  data: TodoInterface[] | undefined
+  completeTodo:(id: number)=> void
+  deleteTodo:(id: number)=>void
+}
 
-const [data,setData] = useState<TodoInterface[] | undefined>()
-
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos')
-      .then((data) => data.json())
-      .then((data) => setData(data))
-  }, [])
-
+const TodosList: React.FC<Props> = ({ data, completeTodo, deleteTodo }) => {
   return (
     <div className=" px-2 max-w-4xl mx-auto -mt-14 text-center">
-      {data ? data.map((todo :TodoInterface)=>(
-        <Todo key={todo.id} {...todo} />
-      )): 'Loading'}
+      {data ? data.map((todo) => <Todo key={todo.id} {...todo} completeTodo={completeTodo} deleteTodo={deleteTodo}/>) : 'Loading'}
     </div>
   )
 }

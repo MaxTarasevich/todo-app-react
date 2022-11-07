@@ -7,9 +7,18 @@ interface Props {
   id: number
   title: string
   completed: boolean
+  completeTodo: (id: number) => void
+  deleteTodo:(id: number) => void
 }
 
-const Todo: React.FC<Props> = ({ userId, id, title, completed }) => {
+const Todo: React.FC<Props> = ({
+  userId,
+  id,
+  title,
+  completed,
+  completeTodo,
+  deleteTodo
+}) => {
   const iconsStyle =
     'text-BrightBlue text-3xl  cursor-pointer hover:text-VeryDarkGrayishBlue duration-500'
   return (
@@ -18,14 +27,17 @@ const Todo: React.FC<Props> = ({ userId, id, title, completed }) => {
      text-VeryDarkGrayishBlue bg-VeryLightGray hover:bg-LightGrayishBlue hover:scale-105 duration-500"
     >
       {completed ? (
-        <AiFillCheckCircle className={iconsStyle} />
+        <AiFillCheckCircle
+          className={iconsStyle}
+          onClick={() => completeTodo(id)}
+        />
       ) : (
-        <BsCircle className={iconsStyle} />
+        <BsCircle className={iconsStyle} onClick={() => completeTodo(id)} />
       )}
 
-      <span className="mr-auto px-2 md:px-8 text-sm md:text-lg">{title}</span>
+      <span className="flex-1 px-2 md:px-8 text-sm md:text-lg">{title}</span>
       <AiFillEdit className={iconsStyle} />
-      <AiFillDelete className={iconsStyle} />
+      <AiFillDelete className={iconsStyle} onClick={()=>deleteTodo(id)}/>
     </div>
   )
 }
