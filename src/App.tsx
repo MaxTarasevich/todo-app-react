@@ -23,7 +23,7 @@ function App() {
 
   function addTodo(todo: TodoInterface) {
     if (data) {
-      setData([...data, todo])
+      setData([todo, ...data])
     } else {
       setData([todo])
     }
@@ -67,7 +67,7 @@ function App() {
           <h1 className="uppercase text-[40px] font-bold text-VeryLightGray pt-16 pb-10">
             Todo
           </h1>
-          <CreateTodo addTodo={addTodo}/>
+          <CreateTodo addTodo={addTodo} />
         </div>
       </div>
       <TodosList
@@ -75,7 +75,7 @@ function App() {
         completeTodo={completeTodo}
         deleteTodo={deleteTodo}
         addTodo={addTodo}
-        editTodo={editTodo} 
+        editTodo={editTodo}
       />
     </>
   )

@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .iconsStyle {
+    @apply text-BrightBlue text-3xl cursor-pointer hover:text-VeryDarkGrayishBlue duration-500 ease-in-out;
+  }
+
+  .hover-transitions {
+    @apply transition-all duration-500 ease-in;
+  }
+
+  .info-panel-item{
+    @apply hover:text-VeryDarkGrayishBlue hover-transitions cursor-pointer;
+  }
+}
+
 body {
   font-size: 18px;
 }

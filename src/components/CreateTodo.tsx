@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { BsCircle } from 'react-icons/bs'
 import { RiSave3Fill } from 'react-icons/ri'
@@ -30,9 +30,6 @@ const CreateTodo: React.FC<Props> = ({
     completed: false,
   })
 
-  const iconsStyle =
-    'text-BrightBlue text-3xl cursor-pointer hover:text-VeryDarkGrayishBlue duration-500'
-
   function handlerSubmint(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (id && title && !!changeEdit && !!editTodo) {
@@ -51,32 +48,42 @@ const CreateTodo: React.FC<Props> = ({
       })
     }
   }
+
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (title && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [title])
+
   return (
     <form
       className="my-2 min-w-[60%] p-5 inline-flex gap-5 items-center rounded-lg shadow-md shadow-DarkBlue
-   text-VeryDarkGrayishBlue bg-VeryLightGray hover:bg-LightGrayishBlue hover:scale-105 duration-500"
+   text-VeryDarkGrayishBlue bg-VeryLightGray hover:bg-LightGrayishBlue hover:scale-105 hover-transitions"
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => handlerSubmint(e)}
     >
       {todo.completed ? (
         <AiFillCheckCircle
-          className={iconsStyle}
+          className="iconsStyle"
           onClick={() => setTodo({ ...todo, completed: !todo.completed })}
         />
       ) : (
         <BsCircle
-          className={iconsStyle}
+          className="iconsStyle"
           onClick={() => setTodo({ ...todo, completed: !todo.completed })}
         />
       )}
 
       <input
+        ref={inputRef}
         className=" flex-1 px-2 md:px-8 text-sm md:text-lg bg-transparent"
         placeholder="Write your todo here"
         value={todo.title}
         onChange={(e) => setTodo({ ...todo, title: e.target.value })}
       />
       <button>
-        <RiSave3Fill className={iconsStyle} />
+        <RiSave3Fill className="iconsStyle" />
       </button>
     </form>
   )
